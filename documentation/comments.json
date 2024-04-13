@@ -1,0 +1,6 @@
+{
+    "_id" : ObjectId("2113f66d7549a7d49631680d"),
+    "title" : "Comentário sobre o filme X",
+    "content" : "Venho por meio dessa dizer que aquele filme tem um final horrível, deviam regravar!",
+    "author" : ObjectId("COLOCAR O ID DE ALGUM USUÁRIO AQUI")
+}

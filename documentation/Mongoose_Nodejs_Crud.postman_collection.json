@@ -1,0 +1,233 @@
+{
+	"info": {
+		"_postman_id": "5a05be3a-662b-431f-a655-1276c4d168d2",
+		"name": "Mongoose_Nodejs_Crud",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23678419"
+	},
+	"item": [
+		{
+			"name": "Criar usuário",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"name\": \"Lucas Santos\",\"email\":\"lucas.santo@example.com\",\"age\":30}"
+				},
+				"url": {
+					"raw": "http://localhost:3084/users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3084",
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Listar usuários",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:3084/users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3084",
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Relatório de usuários",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:3084/report/users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3084",
+					"path": [
+						"report",
+						"users"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "aug",
+							"disabled": true
+						},
+						{
+							"key": "email",
+							"value": "@example.com",
+							"disabled": true
+						},
+						{
+							"key": "age",
+							"value": "28",
+							"disabled": true
+						},
+						{
+							"key": "orderColumn",
+							"value": "age",
+							"disabled": true
+						},
+						{
+							"key": "orderDirection",
+							"value": "-1",
+							"disabled": true
+						},
+						{
+							"key": "perPage",
+							"value": "3",
+							"disabled": true
+						},
+						{
+							"key": "page",
+							"value": "1",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Detalhes do usuário",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:3084/users/661a88a34f5a515e800b4029",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3084",
+					"path": [
+						"users",
+						"661a88a34f5a515e800b4029"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Atualizar usuário",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Lucas Santos 77777\",\n    \"email\": \"lucas.santo7777770000@example.com\",\n    \"age\": 20\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3084/users/661a88a34f5a515e800b4029",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3084",
+					"path": [
+						"users",
+						"661a88a34f5a515e800b4029"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Deletar usuário",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:3084/users/661a88a34f5a515e800b4029",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3084",
+					"path": [
+						"users",
+						"661a88a34f5a515e800b4029"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "id",
+			"value": "1"
+		},
+		{
+			"key": "base_url",
+			"value": "https://postman-rest-api-learner.glitch.me/"
+		}
+	]
+}
