@@ -31,3 +31,7 @@ curl -X PUT -H "Content-Type: application/json" -d '{"name": "Lucas Santos","ema
 ```bash
 curl -X DELETE -H "Content-Type: application/json" http://localhost:3084/users/661a88a34f5a515e800b4231
 ```
+
+## Links
+
+> https://www.brunobrito.net.br/jose-jwt-jws-jwe-jwa-jwk-jwks/

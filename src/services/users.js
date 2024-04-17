@@ -4,6 +4,8 @@ const {
   order,
   match,
   project,
+  lookup,
+  map,
   prepareAggregate,
 } = require("../utils/aggregate");
 
@@ -47,10 +49,16 @@ module.exports = class UserService {
         ]),
         ...order(filters?.orderColumn, filters?.orderDirection),
         ...pagination(filters?.perPage, filters?.page),
-        // TODO::Implement $lookup here
+        ...lookup("comments", "author", "comments"),
         ...project({
           name: 1,
           email_user: "$email",
+          comments: {
+            ...map("$comments", "comment", {
+              title: "$$comment.title",
+              content: "$$comment.content",
+            }),
+          },
         }),
       ];
 
