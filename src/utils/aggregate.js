@@ -43,8 +43,27 @@ const prepareAggregate = (query) => {
   return query.length > 0 ? query : [{ $match: {} }];
 };
 
-const lookup = () => {
-  // TODO::Implement code here
+const lookup = (from, foreignField, as, localField = undefined) => {
+  return [
+    {
+      $lookup: {
+        from,
+        localField: localField ?? "_id",
+        foreignField,
+        as,
+      },
+    },
+  ];
+};
+
+const map = (input, as, inObj) => {
+  return {
+    $map: {
+      input,
+      as,
+      in: inObj,
+    },
+  };
 };
 
 module.exports = {
@@ -54,4 +73,5 @@ module.exports = {
   project,
   prepareAggregate,
   lookup,
+  map,
 };

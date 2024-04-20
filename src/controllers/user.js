@@ -1,4 +1,5 @@
 const UserService = require("../services/users");
+const { encryptJWE, generateJWT } = require("../utils/jwt");
 
 const userService = new UserService();
 
@@ -62,6 +63,20 @@ module.exports = class UserController {
       res.status(200).send(report);
     } catch (error) {
       res.status(400).send(error);
+    }
+  }
+
+  async profile(req, res) {
+    try {
+      const user = await userService.getOneUser(req.headers.userId);
+      console.log(req.headers.userId);
+      const token = await generateJWT(user);
+
+      const data = await encryptJWE(token);
+
+      res.status(200).send({ data });
+    } catch (error) {
+      res.status(400).send({ message: error.message });
     }
   }
 };
