@@ -1,0 +1,134 @@
+service: nodejs-mongoose
+
+frameworkVersion: "3"
+
+useDotenv: true
+
+custom:
+  generalName: 'nodejs-mongoose-${opt:stage, sls:stage, "dev"}'
+  serverless-offline:
+    ignoreJWTSignature: true
+    httpPort: ${self:provider.environment.PORT}
+
+provider:
+  name: aws
+  stackName: "${self:custom.generalName}-stack"
+  runtime: nodejs16.x
+  region: '${opt:region, sls:region, "us-east-1"}'
+  stage: '${opt:stage, sls:stage, "dev"}'
+  timeout: 30
+  lambdaHashingVersion: 20201221
+  environment:
+    PUBLIC_KEY: ${env:PUBLIC_KEY}
+    RSA_PRIVATE_KEY: ${env:RSA_PRIVATE_KEY}
+    SECRET_JWE: ${env:SECRET_JWE}
+    DB_CONNECTION: ${env:DB_CONNECTION}
+    PORT: ${env:PORT}
+
+package:
+  individually: true
+
+plugins:
+  - serverless-api-gateway-caching
+  - serverless-offline
+
+functions:
+  health-check:
+    name: "${self:custom.generalName}-health-check"
+    handler: src/functions/health-check.handler
+    events:
+      - http:
+          path: health-check
+          method: get
+
+  create-user:
+    name: "${self:custom.generalName}-user-create"
+    handler: src/functions/users/create.handler
+    timeout: 30
+    events:
+      - http:
+          path: users
+          method: post
+          authorizer: custom-authorizer
+          cors: true
+
+  list-users:
+    name: "${self:custom.generalName}-users-list"
+    handler: src/functions/users/list.handler
+    timeout: 30
+    events:
+      - http:
+          path: users
+          method: get
+          authorizer: custom-authorizer
+
+  details-user:
+    name: "${self:custom.generalName}-user-details"
+    handler: src/functions/users/details.handler
+    timeout: 30
+    events:
+      - http:
+          path: users/{id}
+          method: get
+          authorizer: custom-authorizer
+
+  delete-user:
+    name: "${self:custom.generalName}-user-delete"
+    handler: src/functions/users/delete.handler
+    timeout: 30
+    events:
+      - http:
+          path: users/{id}
+          method: delete
+          authorizer: custom-authorizer
+          cors: true
+
+  update-user:
+    name: "${self:custom.generalName}-user-update"
+    handler: src/functions/users/update.handler
+    timeout: 30
+    events:
+      - http:
+          path: users/{id}
+          method: put
+          authorizer: custom-authorizer
+          cors: true
+
+  profile-user:
+    name: "${self:custom.generalName}-user-profile"
+    handler: src/functions/users/profile.handler
+    timeout: 30
+    events:
+      - http:
+          path: users/profile
+          method: get
+          authorizer: custom-authorizer
+
+  report-users:
+    name: "${self:custom.generalName}-report-users"
+    handler: src/functions/reports/users.handler
+    timeout: 30
+    events:
+      - http:
+          path: reports/users
+          method: get
+          authorizer: custom-authorizer
+
+  login:
+    name: "${self:custom.generalName}-auth-login"
+    handler: src/functions/auth/login.handler
+    timeout: 30
+    events:
+      - http:
+          path: auth/login
+          method: post
+          cors: true
+
+  custom-authorizer:
+    handler: src/functions/authorizer.handler
+    events:
+      - http:
+          path: authorizer
+          method: post
+          caching:
+            enabled: false
