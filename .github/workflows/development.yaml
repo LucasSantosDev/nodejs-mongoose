@@ -32,3 +32,4 @@ jobs:
           PUBLIC_KEY: ${{ secrets.PUBLIC_KEY }}
           RSA_PRIVATE_KEY: ${{ secrets.RSA_PRIVATE_KEY }}
           SECRET_JWE: ${{ secrets.SECRET_JWE }}
+          PORT: 3085
