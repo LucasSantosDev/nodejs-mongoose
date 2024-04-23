@@ -2,7 +2,7 @@
 
 const { extractTokenFromHeader, validateToken } = require("../utils/jwt");
 
-module.exports.handler = async (event) => {
+module.exports.handler = async (event, context, callback) => {
   try {
     const token = extractTokenFromHeader(event, "authorizationToken");
 
@@ -11,15 +11,38 @@ module.exports.handler = async (event) => {
     if (tokenValidate?.data?._id) {
       const context = { userId: String(tokenValidate.data._id) };
 
-      return { isAuthorized: true, context };
+      callback(null, {
+        principalId: "user",
+        policyDocument: {
+          Version: "2012-10-17",
+          Statement: [
+            {
+              Action: "execute-api:Invoke",
+              Effect: "Allow",
+              Resource: event.methodArn,
+            },
+          ],
+        },
+        context,
+      });
     } else {
-      console.log("Deny >> ", event);
-
-      return { isAuthorized: false };
+      callback(null, {
+        principalId: "user",
+        policyDocument: {
+          Version: "2012-10-17",
+          Statement: [
+            {
+              Action: "execute-api:Invoke",
+              Effect: "Deny",
+              Resource: event.methodArn,
+            },
+          ],
+        },
+      });
     }
   } catch (error) {
     console.error(error);
 
-    return { isAuthorized: false };
+    callback("Unauthorized");
   }
 };

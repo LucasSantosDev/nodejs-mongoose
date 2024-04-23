@@ -25,11 +25,10 @@ provider:
     DB_CONNECTION: ${env:DB_CONNECTION}
     PORT: ${env:PORT}
 
-package:
-  individually: true
+# package:
+# individually: true
 
 plugins:
-  - serverless-api-gateway-caching
   - serverless-offline
 
 functions:
@@ -49,8 +48,10 @@ functions:
       - http:
           path: users
           method: post
-          authorizer: custom-authorizer
           cors: true
+          authorizer:
+            name: custom-authorizer
+            resultTtlInSeconds: 0
 
   list-users:
     name: "${self:custom.generalName}-users-list"
@@ -60,7 +61,9 @@ functions:
       - http:
           path: users
           method: get
-          authorizer: custom-authorizer
+          authorizer:
+            name: custom-authorizer
+            resultTtlInSeconds: 0
 
   details-user:
     name: "${self:custom.generalName}-user-details"
@@ -70,7 +73,9 @@ functions:
       - http:
           path: users/{id}
           method: get
-          authorizer: custom-authorizer
+          authorizer:
+            name: custom-authorizer
+            resultTtlInSeconds: 0
 
   delete-user:
     name: "${self:custom.generalName}-user-delete"
@@ -80,8 +85,10 @@ functions:
       - http:
           path: users/{id}
           method: delete
-          authorizer: custom-authorizer
           cors: true
+          authorizer:
+            name: custom-authorizer
+            resultTtlInSeconds: 0
 
   update-user:
     name: "${self:custom.generalName}-user-update"
@@ -91,8 +98,10 @@ functions:
       - http:
           path: users/{id}
           method: put
-          authorizer: custom-authorizer
           cors: true
+          authorizer:
+            name: custom-authorizer
+            resultTtlInSeconds: 0
 
   profile-user:
     name: "${self:custom.generalName}-user-profile"
@@ -102,7 +111,9 @@ functions:
       - http:
           path: users/profile
           method: get
-          authorizer: custom-authorizer
+          authorizer:
+            name: custom-authorizer
+            resultTtlInSeconds: 0
 
   report-users:
     name: "${self:custom.generalName}-report-users"
@@ -112,7 +123,9 @@ functions:
       - http:
           path: reports/users
           method: get
-          authorizer: custom-authorizer
+          authorizer:
+            name: custom-authorizer
+            resultTtlInSeconds: 0
 
   login:
     name: "${self:custom.generalName}-auth-login"
@@ -126,9 +139,3 @@ functions:
 
   custom-authorizer:
     handler: src/functions/authorizer.handler
-    events:
-      - http:
-          path: authorizer
-          method: post
-          caching:
-            enabled: false
