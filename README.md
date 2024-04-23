@@ -1,6 +1,12 @@
 ## CRUD Mongoose
 
-> Docs Mongoose: https://mongoosejs.com/docs/
+### Run mongodb container
+
+```bash
+sudo docker-compose up -d
+```
+
+---
 
 ### Lista usuários
 
@@ -34,10 +40,16 @@ curl -X DELETE -H "Content-Type: application/json" http://localhost:3084/users/6
 
 ## Links
 
-> https://www.brunobrito.net.br/jose-jwt-jws-jwe-jwa-jwk-jwks/
+> Article JWT/JWE etc: https://www.brunobrito.net.br/jose-jwt-jws-jwe-jwa-jwk-jwks/
 
-> https://keygen.io/
+> Generate Keys: https://keygen.io/
 
-> https://jwt.io/
+> JWT tools: https://jwt.io/
 
-> https://cloud.mongodb.com/v2/5e9b7502d29d1e3b5594e197#/clusters
+> Docs Mongoose: https://mongoosejs.com/docs/
+
+> Cloud MongoDB Atlas: https://cloud.mongodb.com
+
+#### TODO
+
+[ ] - Deploy individualmente - https://www.serverless.com/framework/docs/providers/aws/guide/packaging

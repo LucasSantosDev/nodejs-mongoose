@@ -17,8 +17,7 @@
     "mongoose": "^8.3.1",
     "node-jose": "^2.2.0",
     "node-rsa": "^1.1.1",
-    "serverless": "^3.38.0",
-    "serverless-api-gateway-caching": "^1.10.3"
+    "serverless": "^3.38.0"
   },
   "devDependencies": {
     "serverless-offline": "^13.3.4"
