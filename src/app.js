@@ -7,7 +7,7 @@ const reportRoutes = require("./routes/reports");
 const authRoutes = require("./routes/auth");
 const validateJwt = require("./middlewares/validate-jwt");
 
-const port = process.env.PORT;
+const port = 3086; // process.env.PORT;
 
 const app = express();
 

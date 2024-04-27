@@ -1,0 +1,75 @@
+service: nodejs-mongoose
+
+frameworkVersion: "3"
+
+useDotenv: true
+
+custom:
+  generalName: 'nodejs-mongoose-${opt:stage, sls:stage, "dev"}'
+  serverless-offline:
+    ignoreJWTSignature: true
+    httpPort: ${self:provider.environment.PORT}
+
+provider:
+  name: aws
+  stackName: "${self:custom.generalName}-stack"
+  runtime: nodejs16.x
+  region: '${opt:region, sls:region, "us-east-1"}'
+  stage: '${opt:stage, sls:stage, "dev"}'
+  timeout: 30
+  environment:
+    PUBLIC_KEY: ${env:PUBLIC_KEY}
+    RSA_PRIVATE_KEY: ${env:RSA_PRIVATE_KEY}
+    SECRET_JWE: ${env:SECRET_JWE}
+    DB_CONNECTION: ${env:DB_CONNECTION}
+    PORT: ${env:PORT}
+
+plugins:
+  - serverless-offline
+
+functions:
+  health-check:
+    name: "${self:custom.generalName}-health-check"
+    handler: src/functions/health-check.handler
+    events:
+      - http:
+          path: health-check
+          method: get
+
+  list-users:
+    name: "${self:custom.generalName}-users-list"
+    handler: src/functions/users/list.handler
+    timeout: 30
+    events:
+      - http:
+          path: users
+          method: get
+          authorizer:
+            name: custom-authorizer
+            resultTtlInSeconds: 0
+
+  details-user:
+    name: "${self:custom.generalName}-user-details"
+    handler: src/functions/users/details.handler
+    timeout: 30
+    events:
+      - http:
+          path: users/{id}
+          method: get
+          authorizer:
+            name: custom-authorizer
+            resultTtlInSeconds: 0
+
+  login:
+    name: "${self:custom.generalName}-auth-login"
+    handler: src/functions/auth/login.handler
+    timeout: 30
+    events:
+      - http:
+          path: auth/login
+          method: post
+          cors: true
+
+  custom-authorizer:
+    handler: src/functions/authorizer.handler
+    name: "${self:custom.generalName}-custom-authorizer"

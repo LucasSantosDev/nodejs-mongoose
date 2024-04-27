@@ -69,7 +69,7 @@ module.exports = class UserController {
   async profile(req, res) {
     try {
       const user = await userService.getOneUser(req.headers.userId);
-      console.log(req.headers.userId);
+
       const token = await generateJWT(user);
 
       const data = await encryptJWE(token);
