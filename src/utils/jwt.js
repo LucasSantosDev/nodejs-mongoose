@@ -1,7 +1,7 @@
 const { sign, verify } = require("jsonwebtoken");
 const { JWK, JWE } = require("node-jose");
 
-const expiresIn = 3000;
+const expiresIn = 3600;
 
 const validateToken = (token) => {
   try {
@@ -21,15 +21,12 @@ const validateToken = (token) => {
   }
 };
 
-const extractTokenFromHeader = (headers) => {
-  if (
-    headers.authorization &&
-    headers.authorization.split(" ")[0] === "Bearer"
-  ) {
-    return headers.authorization.split(" ")[1];
+const extractTokenFromHeader = (headers, headersFieldName) => {
+  if (!headers[headersFieldName]) {
+    throw new Error("Missing header basic authorization");
   }
 
-  return headers.authorization;
+  return headers[headersFieldName].replace("Basic ", "");
 };
 
 const generateJWT = async (payload) => {
@@ -43,7 +40,7 @@ const generateJWT = async (payload) => {
 
     return token;
   } catch (error) {
-    console.error("Erro ao gerar autenticação");
+    console.error(error);
 
     throw new Error("Error to generate JWT");
   }

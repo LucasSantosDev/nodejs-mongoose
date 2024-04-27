@@ -32,10 +32,20 @@ curl -X PUT -H "Content-Type: application/json" -d '{"name": "Lucas Santos","ema
 curl -X DELETE -H "Content-Type: application/json" http://localhost:3084/users/661a88a34f5a515e800b4231
 ```
 
+### Run mongodb container
+
+```bash
+sudo docker-compose up -d
+```
+
 ## Links
 
-> https://www.brunobrito.net.br/jose-jwt-jws-jwe-jwa-jwk-jwks/
+> Article JWT/JWE etc: https://www.brunobrito.net.br/jose-jwt-jws-jwe-jwa-jwk-jwks/
 
-> https://keygen.io/
+> Generate Keys: https://keygen.io/
 
-> https://jwt.io/
+> JWT tools: https://jwt.io/
+
+> Docs Mongoose: https://mongoosejs.com/docs/
+
+> Cloud MongoDB Atlas: https://cloud.mongodb.com
