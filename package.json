@@ -4,7 +4,6 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "dev:1": "node src/app.js",
     "dev": "sls offline --region us-east-1 --stage dev",
     "deploy:dev": "sls deploy --region us-east-1 --stage dev",
     "generate-rsa-keys": "node src/utils/generate-rsa.js"

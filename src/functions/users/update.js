@@ -7,9 +7,12 @@ const { success, badRequest } = require("../../utils/response");
 
 module.exports.handler = async (event) => {
   try {
-    const user = await new UserService().getOneUser(event.pathParameters.id);
+    const updatedUser = await new UserService().updateUser(
+      event.pathParameters.id,
+      JSON.parse(event.body)
+    );
 
-    return success({ data: user ? mapUserAuth(user) : {} });
+    return success({ data: mapUserAuth(updatedUser) });
   } catch (error) {
     console.error(error);
 

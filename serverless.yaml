@@ -60,6 +60,69 @@ functions:
             name: custom-authorizer
             resultTtlInSeconds: 0
 
+  delete-user:
+    name: "${self:custom.generalName}-user-delete"
+    handler: src/functions/users/delete.handler
+    timeout: 30
+    events:
+      - http:
+          path: users/{id}
+          method: delete
+          cors: true
+          authorizer:
+            name: custom-authorizer
+            resultTtlInSeconds: 0
+
+  create-user:
+    name: "${self:custom.generalName}-user-create"
+    handler: src/functions/users/create.handler
+    timeout: 30
+    events:
+      - http:
+          path: users
+          method: post
+          cors: true
+          authorizer:
+            name: custom-authorizer
+            resultTtlInSeconds: 0
+
+  update-user:
+    name: "${self:custom.generalName}-user-update"
+    handler: src/functions/users/update.handler
+    timeout: 30
+    events:
+      - http:
+          path: users/{id}
+          method: put
+          cors: true
+          authorizer:
+            name: custom-authorizer
+            resultTtlInSeconds: 0
+
+  profile-user:
+    name: "${self:custom.generalName}-user-profile"
+    handler: src/functions/users/profile.handler
+    timeout: 30
+    events:
+      - http:
+          path: users/profile
+          method: get
+          authorizer:
+            name: custom-authorizer
+            resultTtlInSeconds: 0
+
+  reports-user:
+    name: "${self:custom.generalName}-report-users"
+    handler: src/functions/reports/users.handler
+    timeout: 30
+    events:
+      - http:
+          path: reports/users
+          method: get
+          authorizer:
+            name: custom-authorizer
+            resultTtlInSeconds: 0
+
   login:
     name: "${self:custom.generalName}-auth-login"
     handler: src/functions/auth/login.handler

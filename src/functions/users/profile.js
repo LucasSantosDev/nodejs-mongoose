@@ -2,14 +2,20 @@
 
 require("../../config/database");
 const UserService = require("../../services/users");
-const { mapUserAuth } = require("../../utils/mappers");
+const { generateJWT, encryptJWE } = require("../../utils/jwt");
 const { success, badRequest } = require("../../utils/response");
 
 module.exports.handler = async (event) => {
   try {
-    const user = await new UserService().getOneUser(event.pathParameters.id);
+    const user = await new UserService().getOneUser(
+      event.requestContext.authorizer.userId
+    );
 
-    return success({ data: user ? mapUserAuth(user) : {} });
+    const token = await generateJWT(user);
+
+    const data = await encryptJWE(token);
+
+    return success({ data });
   } catch (error) {
     console.error(error);
 

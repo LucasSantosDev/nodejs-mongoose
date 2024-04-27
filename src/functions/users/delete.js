@@ -2,14 +2,13 @@
 
 require("../../config/database");
 const UserService = require("../../services/users");
-const { mapUserAuth } = require("../../utils/mappers");
 const { success, badRequest } = require("../../utils/response");
 
 module.exports.handler = async (event) => {
   try {
-    const user = await new UserService().getOneUser(event.pathParameters.id);
+    await new UserService().deleteUser(event.pathParameters.id);
 
-    return success({ data: user ? mapUserAuth(user) : {} });
+    return success({ message: "Registro excluido com sucesso" });
   } catch (error) {
     console.error(error);
 

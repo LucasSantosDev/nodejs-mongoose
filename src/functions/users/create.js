@@ -3,13 +3,13 @@
 require("../../config/database");
 const UserService = require("../../services/users");
 const { mapUserAuth } = require("../../utils/mappers");
-const { success, badRequest } = require("../../utils/response");
+const { created, badRequest } = require("../../utils/response");
 
 module.exports.handler = async (event) => {
   try {
-    const user = await new UserService().getOneUser(event.pathParameters.id);
+    const newUser = await new UserService().createUser(JSON.parse(event.body));
 
-    return success({ data: user ? mapUserAuth(user) : {} });
+    return created({ data: mapUserAuth(newUser) });
   } catch (error) {
     console.error(error);
 
