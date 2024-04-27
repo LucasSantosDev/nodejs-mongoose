@@ -7,7 +7,53 @@
 	},
 	"item": [
 		{
-			"name": "Criar usuário",
+			"name": "✅ Criar usuário",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{TOKEN_JWT}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Lucas Santos Ambiente dev\",\n    \"email\":\"lucas.ambientedev@example.com\",\n    \"password\": \"123\",\n    \"age\":30\n}"
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/users",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "✅ Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Set JWT in Env\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.environment.set(\"TOKEN_JWT\", jsonData.token);",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
 			"request": {
 				"method": "POST",
 				"header": [
@@ -18,15 +64,41 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\"name\": \"Lucas Santos\",\"email\":\"lucas.santo@example.com\",\"age\":30}"
+					"raw": "{\n    \"email\":\"lucas.santo3@example.com\",\n    \"password\": \"123\"\n}"
 				},
 				"url": {
-					"raw": "http://localhost:3084/users",
-					"protocol": "http",
+					"raw": "{{BASE_URL}}/auth/login",
 					"host": [
-						"localhost"
+						"{{BASE_URL}}"
 					],
-					"port": "3084",
+					"path": [
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "✅ Listar usuários",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{TOKEN_JWT}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{BASE_URL}}/users",
+					"host": [
+						"{{BASE_URL}}"
+					],
 					"path": [
 						"users"
 					]
@@ -35,48 +107,55 @@
 			"response": []
 		},
 		{
-			"name": "Listar usuários",
+			"name": "✅ Profile",
 			"request": {
 				"method": "GET",
 				"header": [
 					{
 						"key": "Content-Type",
 						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{TOKEN_JWT}}",
+						"type": "text"
 					}
 				],
 				"url": {
-					"raw": "http://localhost:3084/users",
-					"protocol": "http",
+					"raw": "{{BASE_URL}}/users/profile",
 					"host": [
-						"localhost"
+						"{{BASE_URL}}"
 					],
-					"port": "3084",
 					"path": [
-						"users"
+						"users",
+						"profile"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "Relatório de usuários",
+			"name": "✅ Relatório de usuários",
 			"request": {
 				"method": "GET",
 				"header": [
 					{
 						"key": "Content-Type",
 						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{TOKEN_JWT}}",
+						"type": "text"
 					}
 				],
 				"url": {
-					"raw": "http://localhost:3084/report/users",
-					"protocol": "http",
+					"raw": "{{BASE_URL}}/reports/users?perPage=2&page=1",
 					"host": [
-						"localhost"
+						"{{BASE_URL}}"
 					],
-					"port": "3084",
 					"path": [
-						"report",
+						"reports",
 						"users"
 					],
 					"query": [
@@ -107,13 +186,11 @@
 						},
 						{
 							"key": "perPage",
-							"value": "3",
-							"disabled": true
+							"value": "2"
 						},
 						{
 							"key": "page",
-							"value": "1",
-							"disabled": true
+							"value": "1"
 						}
 					]
 				}
@@ -121,79 +198,105 @@
 			"response": []
 		},
 		{
-			"name": "Detalhes do usuário",
+			"name": "✅ Detalhes do usuário",
 			"request": {
 				"method": "GET",
 				"header": [
 					{
 						"key": "Content-Type",
 						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{TOKEN_JWT}}",
+						"type": "text"
 					}
 				],
 				"url": {
-					"raw": "http://localhost:3084/users/661a88a34f5a515e800b4029",
-					"protocol": "http",
+					"raw": "{{BASE_URL}}/users/662d098a1b2da8ccb143b540",
 					"host": [
-						"localhost"
+						"{{BASE_URL}}"
 					],
-					"port": "3084",
 					"path": [
 						"users",
-						"661a88a34f5a515e800b4029"
+						"662d098a1b2da8ccb143b540"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "Atualizar usuário",
+			"name": "✅ Atualizar usuário",
 			"request": {
 				"method": "PUT",
 				"header": [
 					{
 						"key": "Content-Type",
 						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{TOKEN_JWT}}",
+						"type": "text"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"name\": \"Lucas Santos 77777\",\n    \"email\": \"lucas.santo7777770000@example.com\",\n    \"age\": 20\n}"
+					"raw": "{\n    \"name\": \"Lucas Santos 987\",\n    \"email\": \"lucas.test9827@example.com\",\n    \"age\": 22\n}"
 				},
 				"url": {
-					"raw": "http://localhost:3084/users/661a88a34f5a515e800b4029",
-					"protocol": "http",
+					"raw": "{{BASE_URL}}/users/662d098a1b2da8ccb143b540",
 					"host": [
-						"localhost"
+						"{{BASE_URL}}"
 					],
-					"port": "3084",
 					"path": [
 						"users",
-						"661a88a34f5a515e800b4029"
+						"662d098a1b2da8ccb143b540"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "Deletar usuário",
+			"name": "✅ Deletar usuário",
 			"request": {
 				"method": "DELETE",
 				"header": [
 					{
 						"key": "Content-Type",
 						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{TOKEN_JWT}}",
+						"type": "text"
 					}
 				],
 				"url": {
-					"raw": "http://localhost:3084/users/661a88a34f5a515e800b4029",
-					"protocol": "http",
+					"raw": "{{BASE_URL}}/users/662d098a1b2da8ccb143b540",
 					"host": [
-						"localhost"
+						"{{BASE_URL}}"
 					],
-					"port": "3084",
 					"path": [
 						"users",
-						"661a88a34f5a515e800b4029"
+						"662d098a1b2da8ccb143b540"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "✅ Health Check",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/health-check",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"health-check"
 					]
 				}
 			},
